@@ -2,6 +2,8 @@
 
 InterviewAI is a mock-interview practice app with a React/Vite frontend, a Node/Express API, MySQL persistence, Supabase authentication, and server-side Gemini AI features.
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://dashboard.render.com/blueprint/new?repo=https://github.com/LeaderAssemble/InterviewAI)
+
 ## Features
 
 - Public introduction page and Supabase email/password sign-in, sign-up, and password recovery.
@@ -74,6 +76,8 @@ Supabase reset emails return to the URL where the reset was requested. Add each 
 ## Production deployment
 
 The included [`render.yaml`](./render.yaml) configures a free Render web service to build and serve the frontend and API from one HTTPS origin. The API reads Render's `PORT`; local development continues to use `API_PORT`. On each start, the service applies the project's idempotent MySQL schema setup before launching the API.
+
+Use the **Deploy to Render** button above to create the service from this GitHub repository. Before the service can become healthy, create a MySQL-compatible database (the steps below use TiDB Cloud Starter) and provide its connection values, plus the Supabase URL/anon key and Gemini API key, in Render's Blueprint setup. These credentials are entered into Render and must not be committed to GitHub. Once Render finishes deploying, it will show the service's public `https://<your-service>.onrender.com` URL.
 
 For a no-card, no-subscription demo setup, pair Render's Free web service with TiDB Cloud Starter (MySQL-compatible). Render Free services have 512 MB RAM, share a 750-hour monthly workspace allowance, and sleep after 15 idle minutes; the first request after sleep can take about a minute. Render's free filesystem is temporary, so all interview data must remain in the database. TiDB Starter has monthly free usage quotas; stay within them and do not add a payment method if you want to avoid paid usage. Check both providers' current plan and usage pages before creating resources, since free-tier limits can change.
 
