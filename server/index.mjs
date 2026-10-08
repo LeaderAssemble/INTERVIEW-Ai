@@ -10,7 +10,7 @@ import {
 } from './evaluation.mjs';
 
 const app = express();
-const port = Number(process.env.API_PORT || 3001);
+const port = Number(process.env.PORT || process.env.API_PORT || 3001);
 const host = process.env.HOST || '0.0.0.0';
 const databaseName = process.env.MYSQL_DATABASE || 'interviewai';
 const categoryValues = new Set(['hr', 'technical', 'behavioral']);
@@ -700,6 +700,7 @@ async function start() {
     user: process.env.MYSQL_USER || 'root',
     password: process.env.MYSQL_PASSWORD || '',
     database: databaseName,
+    ssl: process.env.MYSQL_SSL === 'true' ? { rejectUnauthorized: true } : undefined,
     waitForConnections: true,
     connectionLimit: 10,
     dateStrings: true,

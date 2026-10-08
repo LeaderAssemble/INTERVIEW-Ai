@@ -73,15 +73,11 @@ Supabase reset emails return to the URL where the reset was requested. Add each 
 
 ## Production deployment
 
-The API can serve the built frontend and API from one HTTPS origin:
+The included [`render.yaml`](./render.yaml) configures a free Render web service to build and serve the frontend and API from one HTTPS origin. The API reads Render's `PORT`; local development continues to use `API_PORT`. On each start, the service applies the project's idempotent MySQL schema setup before launching the API.
 
-```powershell
-npm run build
-$env:NODE_ENV = 'production'
-npm start
-```
+For a no-card, no-subscription demo setup, pair Render's Free web service with TiDB Cloud Starter (MySQL-compatible). Render Free services have 512 MB RAM, share a 750-hour monthly workspace allowance, and sleep after 15 idle minutes; the first request after sleep can take about a minute. Render's free filesystem is temporary, so all interview data must remain in the database. TiDB Starter has monthly free usage quotas; stay within them and do not add a payment method if you want to avoid paid usage. Check both providers' current plan and usage pages before creating resources, since free-tier limits can change.
 
-Deploy the Node API to a Node hosting service and use a managed MySQL database for a public deployment; a developer's local MySQL database is not reachable from a hosted service. Configure the same environment variables in the host's private settings, set `API_PORT` to the port provided by the host, and update the Supabase redirect allow-list to the final HTTPS app URL. Do not publish credentials, `.env`, or user data.
+Create a TiDB Cloud Starter cluster in a nearby AWS region, then use its secure connection details in the Render Blueprint prompts: `MYSQL_HOST` from TiDB, port `4000`, the generated username/password, database `interviewai`, and TLS enabled. Add the Supabase URL/anon key and Gemini API key when prompted. Permit the Render service's outbound database connection in TiDB's network access settings; use a strong unique database password and keep it private. After the first successful deployment, add the final `https://<your-service>.onrender.com/**` URL to the Supabase Authentication → URL Configuration → Redirect URLs allow-list. Do not publish credentials, `.env`, or user data.
 
 ## Checks
 
