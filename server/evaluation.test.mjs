@@ -227,3 +227,19 @@ test('weighted score uses the configured category weights', () => {
     communication_score: 8,
   }), 7.25);
 });
+
+test('missing question data in prompt generation falls back safely instead of crashing', () => {
+  const prompt = buildEvaluationPrompt({
+    question: null,
+    referenceAnswer: '  A class can inherit behavior from another class.  ',
+    answer: 'It is about inheritance.',
+  });
+
+  assert.match(prompt, /The question category is general/);
+  assert.match(prompt, /A class can inherit behavior from another class/);
+});
+
+test('weighted score gracefully ignores missing or invalid values', () => {
+  assert.equal(calculateWeightedScore({}), 0);
+  assert.equal(calculateWeightedScore({ relevance_score: undefined, clarity_score: null }), 0);
+});
