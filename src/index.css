@@ -1,0 +1,271 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    @apply bg-gradient-to-br from-secondary-950 via-secondary-900 to-secondary-950;
+    @apply min-h-screen;
+  }
+
+  .dark body {
+    @apply text-secondary-100;
+  }
+
+  .light body {
+    @apply text-secondary-900;
+  }
+
+  ::selection {
+    @apply bg-primary-500/30;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+
+  .glass-dark {
+    @apply bg-black/20 backdrop-blur-xl border border-white/5;
+  }
+
+  .glass-light {
+    @apply bg-white/80 backdrop-blur-xl border border-secondary-200/50;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-400 via-accent-400 to-primary-500 bg-clip-text text-transparent;
+  }
+
+  .gradient-border {
+    @apply relative;
+    background: linear-gradient(var(--bg, #0f172a), var(--bg, #0f172a)) padding-box,
+                linear-gradient(135deg, #3b82f6, #10b981, #3b82f6) border-box;
+    border: 1px solid transparent;
+  }
+
+  .card {
+    @apply glass rounded-2xl p-6 transition-all duration-300;
+  }
+
+  .card:hover {
+    @apply border-white/20 shadow-xl shadow-primary-500/5;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-500 rounded-xl font-semibold;
+    @apply hover:from-primary-500 hover:to-primary-400 transition-all duration-300;
+    @apply shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/40;
+    @apply active:scale-[0.98] transform;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 bg-secondary-800/50 rounded-xl font-semibold border border-secondary-700/50;
+    @apply hover:bg-secondary-700/50 hover:border-secondary-600 transition-all duration-300;
+    @apply active:scale-[0.98] transform;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 rounded-lg font-medium;
+    @apply hover:bg-secondary-800/50 transition-all duration-200;
+    @apply active:scale-[0.98] transform;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-secondary-800/30 rounded-xl border border-secondary-700/50;
+    @apply focus:border-primary-500/50 focus:ring-2 focus:ring-primary-500/20;
+    @apply placeholder:text-secondary-500 transition-all duration-200;
+    @apply outline-none;
+  }
+
+  .score-ring {
+    @apply relative inline-flex items-center justify-center;
+  }
+
+  .score-ring svg {
+    @apply transform -rotate-90;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-500/20 text-primary-300 border border-primary-500/30;
+  }
+
+  .badge-success {
+    @apply badge bg-success-500/20 text-success-400 border border-success-500/30;
+  }
+
+  .badge-warning {
+    @apply badge bg-warning-500/20 text-warning-400 border border-warning-500/30;
+  }
+
+  .badge-error {
+    @apply badge bg-error-500/20 text-error-400 border border-error-500/30;
+  }
+
+  .category-card {
+    @apply card cursor-pointer;
+  }
+
+  .category-card-selected {
+    @apply border-primary-500/50 bg-primary-500/10;
+  }
+
+  .progress-bar {
+    @apply h-2 bg-secondary-800/50 rounded-full overflow-hidden;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-gradient-to-r from-primary-500 to-accent-500 rounded-full transition-all duration-500;
+  }
+
+  .mic-button {
+    @apply w-20 h-20 rounded-full flex items-center justify-center;
+    @apply bg-gradient-to-r from-primary-600 to-primary-500;
+    @apply shadow-lg shadow-primary-500/30;
+    @apply hover:shadow-xl hover:shadow-primary-500/50 hover:scale-105;
+    @apply transition-all duration-300;
+    @apply active:scale-95;
+  }
+
+  .mic-button-active {
+    @apply bg-gradient-to-r from-error-600 to-error-500;
+    @apply shadow-error-500/30 hover:shadow-error-500/50;
+    @apply animate-pulse;
+  }
+
+  .waveform {
+    @apply flex items-center justify-center gap-1 h-12;
+  }
+
+  .waveform-bar {
+    @apply w-1 bg-primary-400 rounded-full transition-all duration-150;
+  }
+
+  .chart-container {
+    @apply glass rounded-2xl p-6;
+  }
+
+  .stat-card {
+    @apply glass rounded-xl p-4 flex flex-col;
+  }
+
+  .stat-value {
+    @apply text-3xl font-bold gradient-text;
+  }
+
+  .stat-label {
+    @apply text-sm text-secondary-400 mt-1;
+  }
+
+  .feedback-card {
+    @apply glass rounded-xl p-4 border-l-4;
+  }
+
+  .feedback-excellent {
+    @apply border-l-success-500 bg-success-500/5;
+  }
+
+  .feedback-good {
+    @apply border-l-primary-500 bg-primary-500/5;
+  }
+
+  .feedback-needs-improvement {
+    @apply border-l-warning-500 bg-warning-500/5;
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl;
+    @apply hover:bg-secondary-800/50 transition-all duration-200;
+    @apply cursor-pointer;
+  }
+
+  .sidebar-item-active {
+    @apply bg-primary-500/10 text-primary-400 border-r-2 border-primary-500;
+  }
+
+  .question-card {
+    @apply glass rounded-2xl p-6 mb-4;
+  }
+
+  .timer-display {
+    @apply font-mono text-4xl font-bold tracking-wider;
+  }
+
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/60 backdrop-blur-sm z-50;
+  }
+
+  .modal-content {
+    @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+    @apply glass rounded-2xl p-8 max-w-xl w-[90vw] max-h-[90vh] overflow-auto;
+    @apply z-50;
+  }
+
+  .tooltip {
+    @apply absolute z-50 px-3 py-2 text-sm;
+    @apply bg-secondary-800 rounded-lg border border-secondary-700;
+    @apply shadow-xl;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+}
+
+@keyframes waveform {
+  0%, 100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.animate-waveform {
+  animation: waveform 0.5s ease-in-out infinite;
+}
