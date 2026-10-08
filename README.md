@@ -83,10 +83,15 @@ For a no-card, no-subscription demo setup, pair Render's Free web service with T
 
 Create a TiDB Cloud Starter cluster in a nearby AWS region, then use its secure connection details in the Render Blueprint prompts: `MYSQL_HOST` from TiDB, port `4000`, the generated username/password, database `interviewai`, and TLS enabled. Add the Supabase URL/anon key and Gemini API key when prompted. Permit the Render service's outbound database connection in TiDB's network access settings; use a strong unique database password and keep it private. After the first successful deployment, add the final `https://<your-service>.onrender.com/**` URL to the Supabase Authentication → URL Configuration → Redirect URLs allow-list. Do not publish credentials, `.env`, or user data.
 
+### Free static demo deployment
+
+For a no-database demo, import this repository into Vercel and deploy it with the included [`vercel.json`](./vercel.json). It builds using `npm run build:demo`, which starts directly in demo mode and needs no Supabase, Gemini, or MySQL credentials. Demo interviews, history, and streaks are stored only in the visitor's browser; AI-generated questions, semantic Gemini evaluation, account sign-in, and cross-device sync are not available in this static demo. The regular Render production build is unchanged.
+
 ## Checks
 
 ```powershell
 npm run typecheck
 npm test
 npm run build
+npm run build:demo
 ```

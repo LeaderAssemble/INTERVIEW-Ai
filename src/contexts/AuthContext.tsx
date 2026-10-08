@@ -18,15 +18,19 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const demoOnly = import.meta.env.VITE_DEMO_ONLY === 'true';
+const demoUser = { id: 'interviewai-demo-user', email: 'demo@interviewai.local' };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<Pick<User, 'id' | 'email'> | null>(null);
+  const [user, setUser] = useState<Pick<User, 'id' | 'email'> | null>(demoOnly ? demoUser : null);
   const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [isDemo, setIsDemo] = useState(false);
+  const [loading, setLoading] = useState(!demoOnly);
+  const [isDemo, setIsDemo] = useState(demoOnly);
   const [isRecovering, setIsRecovering] = useState(false);
 
   useEffect(() => {
+    if (demoOnly || !supabase) return;
+
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
       setUser(data.session?.user ?? null);
@@ -47,16 +51,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signUp = async (email: string, password: string) => {
+    if (!supabase) return { error: 'Account sign-up is unavailable in this demo.' };
     const { error } = await supabase.auth.signUp({ email, password });
     return { error: error?.message ?? null };
   };
 
   const signIn = async (email: string, password: string) => {
+    if (!supabase) return { error: 'Account sign-in is unavailable in this demo.' };
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     return { error: error?.message ?? null };
   };
 
   const sendPasswordReset = async (email: string) => {
+    if (!supabase) return { error: 'Password recovery is unavailable in this demo.' };
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: window.location.origin,
     });
@@ -64,6 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const updatePassword = async (password: string) => {
+    if (!supabase) return { error: 'Password updates are unavailable in this demo.' };
     const { error } = await supabase.auth.updateUser({ password });
     return { error: error?.message ?? null };
   };
@@ -72,12 +80,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const startDemo = () => {
     setIsDemo(true);
-    setUser({ id: 'interviewai-demo-user', email: 'demo@interviewai.local' });
+    setUser(demoUser);
     setSession(null);
   };
 
   const signOut = async () => {
-    if (!isDemo) await supabase.auth.signOut();
+    if (demoOnly) return;
+    if (!isDemo && supabase) await supabase.auth.signOut();
     setIsDemo(false);
     setIsRecovering(false);
     setUser(null);

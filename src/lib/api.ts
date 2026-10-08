@@ -3,6 +3,9 @@ import { supabase } from './supabase';
 const apiBaseUrl = import.meta.env.VITE_API_URL || '/api';
 
 export async function apiRequest<T>(path: string, options: RequestInit = {}): Promise<T> {
+  if (!supabase) {
+    throw new Error('This feature requires an account and is unavailable in the static demo.');
+  }
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) {
     throw new Error('Sign in to access your account data.');

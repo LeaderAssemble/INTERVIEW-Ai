@@ -16,6 +16,7 @@
     "start": "node server/index.mjs",
     "test": "node --test server/evaluation.test.mjs",
     "build": "vite build",
+    "build:demo": "vite build --mode demo",
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json"
