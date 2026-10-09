@@ -2,7 +2,7 @@
 
 InterviewAI is a mock-interview practice app with a React/Vite frontend, a Node/Express API, MySQL persistence, Supabase authentication, and server-side Gemini AI features.
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://dashboard.render.com/blueprint/new?repo=https://github.com/LeaderAssemble/InterviewAI)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://dashboard.render.com/blueprint/new?repo=https://github.com/LeaderAssemble/INTERVIEW-Ai)
 
 ## Features
 
