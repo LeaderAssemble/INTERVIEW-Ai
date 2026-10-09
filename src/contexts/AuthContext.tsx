@@ -22,10 +22,10 @@ const demoOnly = import.meta.env.VITE_DEMO_ONLY === 'true';
 const demoUser = { id: 'interviewai-demo-user', email: 'demo@interviewai.local' };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<Pick<User, 'id' | 'email'> | null>(demoOnly ? demoUser : null);
+  const [user, setUser] = useState<Pick<User, 'id' | 'email'> | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(!demoOnly);
-  const [isDemo, setIsDemo] = useState(demoOnly);
+  const [isDemo, setIsDemo] = useState(false);
   const [isRecovering, setIsRecovering] = useState(false);
 
   useEffect(() => {
@@ -85,8 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
-    if (demoOnly) return;
-    if (!isDemo && supabase) await supabase.auth.signOut();
+    if (!demoOnly && !isDemo && supabase) await supabase.auth.signOut();
     setIsDemo(false);
     setIsRecovering(false);
     setUser(null);
